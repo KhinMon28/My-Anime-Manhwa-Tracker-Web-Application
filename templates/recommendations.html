@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Recommended for You</h2>
+
+    {% if top_tags %}
+        <p>Based on your favorite tags: {{ top_tags | join(", ") }}</p>
+    {% endif %}
+
+    <div class="anime-container">
+        {% for anime in recommended %}
+            <div class="anime-card">
+                <strong>{{ anime.title }}</strong>
+                <p>Type: {{ anime.type }}</p>
+                <p>Rating: {{ anime.rating }}/10</p>
+
+                {% if anime.tags %}
+                    <div class="tags">
+                        {% for tag in anime.tags.split(", ") %}
+                            <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if anime.image_url %}
+                    <img src="{{ anime.image_url }}" alt="{{ anime.title }}" class="anime-image">
+                {% endif %}
+
+                {% if anime.comments %}
+                    <p class="anime-comments">{{ anime.comments }}</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p style="text-align: center;">No recommendations yet. Add and rate more anime/manhwa to get better suggestions!</p>
+        {% endfor %}
+    </div>
+{% endblock %}

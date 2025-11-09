@@ -1,0 +1,330 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #FCDBD7;
+    color: #333;
+}
+
+header h1 {
+    text-align: center;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #0077cc;
+}
+
+ul li {
+    margin: 10px 0;
+    list-style: none;
+}
+
+img {
+    margin-top: 5px;
+}
+
+
+/*For the anime cards*/
+.anime-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.anime-card {
+    position: relative;
+    background-color: #fffaf5;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 35px 15px 15px 15px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.anime-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.anime-card img.anime-image {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.anime-comments {
+    font-family: 'Quicksand', cursive;
+    font-weight: 0;
+    color: #555;
+    margin-top: 5px;
+}
+
+.anime-card p {
+    margin: 5px 0;
+}
+
+.anime-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.anime-card .tag {
+    background-color: #872816;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 0.85em;
+}
+
+/*Tags*/
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.tag {
+    background-color: #872816;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+
+/*For the little badge at the corner of the anime card*/
+.badge {
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    padding: 5px 15px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 0 12px 12px 0;
+    transform: rotate(-10deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/*Different colors for the badges*/
+.badge.ongoing {
+    background-color: #00B515;
+}
+
+.badge.finished {
+    background-color: #3000B5;
+}
+
+.badge.pending {
+    background-color: #F5C827;
+    color: black;
+}
+
+/*For Delete and Edit links/buttons*/
+.delete-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #C96E30;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.delete-link:hover {
+    text-decoration: underline;
+}
+
+.edit-link:hover {
+    text-decoration: underline;
+}
+
+.edit-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #C96E30;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/*Dark Mode!!*/
+.dark-mode {
+    background-color: #170000 !important;
+    color: white !important;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3 {
+    color: white !important;
+}
+
+.dark-mode .anime-card {
+    background-color: #2b1a18 !important;
+    color: white !important;
+    box-shadow: 2px 2px 8px rgba(255, 255, 255, 0.1);
+    border: 1px solid #6e3c36;
+}
+
+.dark-mode .anime-comments {
+    color: #ddd !important;
+}
+
+.dark-mode .delete-link,
+.dark-mode .edit-link {
+    color: #FF3100 !important;
+}
+
+.dark-mode .delete-link:hover,
+.dark-mode .edit-link:hover {
+    text-decoration: underline;
+    color: #FFEA00 !important;
+}
+
+
+/*Buttons*/
+.btn-primary {
+    background-color: #3D0500 !important;
+    border-color: #3D0500 !important;
+}
+
+.btn-primary:hover {
+    background-color: #FF3E26 !important;
+    border-color: #FF3E26 !important;
+}
+
+.text-bg-primary {
+    background-color: #AD5F53 !important;
+    color: white !important;
+}
+
+
+/*Le switcharoo*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+/* When checked, switch color + move knob */
+input:checked+.slider {
+    background-color: #FF9385;
+}
+
+input:checked+.slider::before {
+    transform: translateX(22px);
+}
+
+
+/*Navigation and page buttons*/
+.nav-btn {
+    color: white;
+    background-color: #8C4B16;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.nav-btn:hover {
+    background-color: #FC6F05;
+}
+
+.pg-btn {
+    color: white;
+    background-color: #8C4B16;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 0 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.pg-btn:hover {
+    background-color: #FC6F05;
+}
+
+
+/*For the search bars and buttons*/
+.search-input {
+    padding: 8px;
+    width: 250px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.search-btn {
+    border-radius: 12px;
+    border: none;
+    padding: 8px 16px;
+    background-color: #8C4B16;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #FC6F05;
+}
+
+.clear-btn {
+    border-radius: 9px;
+    border: none;
+    padding: 2px 9px;
+    background-color: #8C4B16;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.clear-btn:hover {
+    background-color: #FC6F05;
+}
+
+select {
+    padding: 5px 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}

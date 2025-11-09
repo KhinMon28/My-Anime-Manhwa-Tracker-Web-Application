@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>MyAnime/Manhwa Tracker</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Indie+Flower&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+
+    <body>
+
+        <header>
+            {% if session.username %}
+                <h1>My Anime/Manhwa Tracker</h1>
+            {% else %}
+                <h1>Welcome to My Anime/Manhwa Tracker!!</h1>
+            {% endif %}
+            <nav style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <!-- Left side: navigation links -->
+                <div>
+                    {% if session.username %}
+                        <a href="/" class="nav-btn">Home</a>
+                        <a href="/add" class="nav-btn">Add New</a>
+                        <a href="/recommendations" class="nav-btn">Recommendations</a>
+                        <a href="/logout" class="nav-btn">Logout ({{ session.username }})</a>
+                    {% else %}
+                        <a href="/login" class="nav-btn">Login</a>
+                        <a href="/signup" class="nav-btn">Sign Up</a>
+                    {% endif %}
+                </div>
+
+                <!-- Right side: dark mode switch -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <label class="switch">
+                        <input type="checkbox" onclick="runDarkness()" />
+                        <span class="slider"></span>
+                    </label>
+                    <span>Dark Mode</span>
+                </div>
+            </nav>
+            <hr>
+        </header>
+
+        <!-- ✅ Flash messages (only appear if there are messages) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="flash-container" style="text-align:center; margin-top: 15px;">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}" style="
+                                                                         background-color: {% if category == 'error' %}#FFD4D4{% else %}#E5FFD6{% endif %};
+                                                                         color: {% if category == 'error' %}#5A0000{% else %}#004400{% endif %};
+                                                                         padding: 10px 18px;
+                                                                         border-radius: 12px;
+                                                                         display: inline-block;
+                                                                         font-weight: bold;
+                                                                         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                                                                         animation: fadeOut 1s ease-in-out 3s forwards;
+                                                                        ">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+        <script>
+            function runDarkness() {
+                const body = document.body;
+                const isDark = body.classList.toggle("dark-mode");
+                localStorage.setItem("darkMode", isDark);
+            }
+
+            // When the page loads, check if dark mode was on before
+            window.onload = function() {
+                const darkMode = localStorage.getItem("darkMode") === "true";
+                if (darkMode) {
+                    document.body.classList.add("dark-mode");
+                    document.querySelector('.switch input').checked = true;
+                }
+            };
+
+            // Auto-fade flash messages after 4s
+            setTimeout(() => {
+                const flashes = document.querySelectorAll(".flash-message");
+                flashes.forEach(flash => flash.style.opacity = "0");
+                setTimeout(() => flashes.forEach(flash => flash.remove()), 1000);
+            }, 4000);
+        </script>
+
+        <style>
+            /* Smooth fade-out animation */
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+            }
+        </style>
+
+    </body>
+
+</html>

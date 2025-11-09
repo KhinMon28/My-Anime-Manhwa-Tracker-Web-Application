@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h2>Edit Anime/Manhwa</h2>
+
+    <form method="POST">
+
+        <label>Title:
+            <input type="text" name="title" value="{{ anime.title }}" required>
+        </label><br><br>
+
+        <label>Progress:
+            <select name="progress" required>
+                <option value="Ongoing" {% if anime.progress == "Ongoing" %}selected{% endif %}>Ongoing</option>
+                <option value="Finished" {% if anime.progress == "Finished" %}selected{% endif %}>Finished</option>
+                <option value="Pending" {% if anime.progress == "Pending" %}selected{% endif %}>Pending</option>
+            </select>
+        </label><br><br>
+
+        <label>Rating:
+            <select name="rating" required>
+                {% for r in range(1, 6) %}
+                    <option value="{{ r }}" {% if anime.rating == r %}selected{% endif %}>{{ r }}</option>
+                {% endfor %}
+            </select>
+        </label><br><br>
+
+        <label for="tags">Select Genres:</label>
+
+        <label>Genres:</label><br>
+        {% set selected_tags = anime.tags.split(", ") if anime.tags else [] %}
+        {% for genre in [
+        "Action", "Adventure", "Comedy", "Drama", "Fantasy", "Romance", "Sci-Fi",
+        "Mystery", "Thriller", "Horror", "Slice of Life", "Supernatural",
+        "Historical", "Psychological", "Tragedy", "Sports", "Mecha", "Military",
+        "Music", "Magic", "Martial Arts"
+        ] %}
+        <input type="checkbox" name="tags" value="{{ genre }}" {% if genre in selected_tags %}checked{% endif %}> {{ genre }} <br>
+{% endfor %}
+
+
+
+<label>Image URL (optional):
+    <input type="text" name="image_url" value="{{ anime.image_url or '' }}">
+</label><br><br>
+
+<label>Additional Comments:
+    <input type="text" name="comments" value="{{ anime.comments or '' }}" required>
+</label><br><br>
+
+<button type="submit" class="search-btn">Update</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>All Anime/Manhwa</h2>
+
+<!-- Search, Sort & Filter -->
+    <form method="GET" action="/" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+
+    <!-- Left side: Sort & Filter -->
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <select name="sort">
+                <option value="alpha" {% if current_sort == "alpha" %}selected{% endif %}>Alphabetical</option>
+                <option value="rating" {% if current_sort == "rating" %}selected{% endif %}>Rating</option>
+                <option value="progress" {% if current_sort == "progress" %}selected{% endif %}>Progress</option>
+            </select>
+
+            <select name="genre">
+                <option value="">All Genres</option>
+                {% for genre in genres_list %}
+                    <option value="{{ genre }}" {% if current_genre == genre %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="progress">
+                <option value="">All Progress</option>
+                <option value="Ongoing" {% if current_progress == "Ongoing" %}selected{% endif %}>Ongoing</option>
+                <option value="Finished" {% if current_progress == "Finished" %}selected{% endif %}>Finished</option>
+                <option value="Pending" {% if current_progress == "Pending" %}selected{% endif %}>Pending</option>
+            </select>
+
+        <!-- Clear Filters button -->
+            <a href="/" class="clear-btn" style="background-color: #ccc; color: black;">Clear Filters</a>
+        </div>
+
+    <!-- Right side: Search -->
+        <div style="display: flex; gap: 5px; align-items: center;">
+            <input type="text" name="q" placeholder="Search by title..." value="{{ search_query }}" class="search-input">
+            <button type="submit" class="search-btn">Search</button>
+        </div>
+    </form>
+
+
+<!-- Anime cards -->
+    <div class="anime-container">
+        {% for anime in anime_list %}
+            <div class="anime-card">
+
+        <!-- Badges -->
+                {% if anime.progress == 'Ongoing' %}
+                    <span class="badge ongoing">Ongoing</span>
+                {% elif anime.progress == 'Finished' %}
+                    <span class="badge finished">Finished</span>
+                {% else %}
+                    <span class="badge pending">Pending</span>
+                {% endif %}
+
+                <strong>{{ anime.title }}</strong>
+                <p>Type: {{ anime.type }}</p>
+                <p>Rating: {{ anime.rating }}/5</p>
+
+                {% if anime.tags %}
+                    <div class="tags">
+                        {% for tag in anime.tags.split(", ") %}
+                            <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if anime.image_url %}
+                    <img src="{{ anime.image_url }}" alt="{{ anime.title }}" class="anime-image">
+                {% endif %}
+
+                {% if anime.comments %}
+                    <p class="anime-comments">{{ anime.comments }}</p>
+                {% endif %}
+
+                <a href="/delete/{{ anime.id }}" class="delete-link">Delete</a><br>
+                <a href="/edit/{{ anime.id }}" class="edit-link">Edit</a>
+            </div>
+
+        {% else %}
+            <p style="text-align: center;">Uh oh! No anime/manhwa found!</p>
+        {% endfor %}
+
+    </div>
+
+<!-- Page controls -->
+    <div style="text-align: center; margin-top: 20px;">
+
+        {% if page > 1 %}
+            <a href="/?q={{ search_query }}&page={{ page - 1 }}" class="pg-btn">Previous</a>
+        {% endif %}
+
+        <span> Page {{ page }} of {{ total_pages }} </span>
+
+        {% if page < total_pages %}
+            <a href="/?q={{ search_query }}&page={{ page + 1 }}" class="pg-btn">Next</a>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
